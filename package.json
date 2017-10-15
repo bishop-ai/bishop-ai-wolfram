@@ -11,6 +11,9 @@
         "email": "nova706@gmail.com",
         "url": "http://www.davidpaulhamilton.net/"
     },
+    "homepage": "https://github.com/bishop-ai/bishop-ai-wolfram",
+    "bugs": "https://github.com/bishop-ai/bishop-ai-wolfram/issues",
+    "repository": "github:bishop-ai/bishop-ai-wolfram",
     "dependencies": {
         "request": "~2.1"
     }
