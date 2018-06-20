@@ -1,6 +1,6 @@
 {
     "name": "bishop-ai-wolfram",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "description": "Wolfram Alpha query support in Bishop-AI",
     "keywords": [
         "bishop-ai plugin",
@@ -13,8 +13,5 @@
     },
     "homepage": "https://github.com/bishop-ai/bishop-ai-wolfram",
     "bugs": "https://github.com/bishop-ai/bishop-ai-wolfram/issues",
-    "repository": "github:bishop-ai/bishop-ai-wolfram",
-    "dependencies": {
-        "request": "~2.1"
-    }
+    "repository": "github:bishop-ai/bishop-ai-wolfram"
 }

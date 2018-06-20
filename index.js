@@ -1,6 +1,7 @@
-var request = require('request');
+var Wolfram = function (config, axios) {
 
-var Wolfram = function (config) {
+    this.axios = axios;
+    var self = this;
 
     this.intent = [
         {value: "Ask Wolfram [Alpha] *query", trigger: "wolfram.query"}
@@ -13,7 +14,7 @@ var Wolfram = function (config) {
 
             var query = data.namedValues.query || "";
 
-            Wolfram.query(appId, query, function (error, result) {
+            self.query(appId, query, function (error, result) {
                 if (error) {
                     console.log("Wolfram: error while querying: " + error);
                     dfd.resolve("Sorry, something went wrong. Please make sure your Wolfram Alpha plugin is set up correctly.");
@@ -33,28 +34,32 @@ var Wolfram = function (config) {
     }
 };
 
-Wolfram.query = function (appId, query, cb) {
+Wolfram.prototype.query = function (appId, query, cb) {
     if (!appId) {
         return cb("Application key not set", null);
     }
 
-    var uri = 'http://api.wolframalpha.com/v1/spoken?i=' + encodeURIComponent(query) + '&appid=' + appId;
-
-    request(uri, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            return cb(null, body);
-        } else {
-            return cb(error, null);
+    var url = 'http://api.wolframalpha.com/v1/spoken?i=' + encodeURIComponent(query) + '&appid=' + appId;
+    this.axios({
+        method: "get",
+        url: url,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
         }
+    }).then(function (response) {
+        return cb(null, response.data);
+    }).catch(function (error) {
+        return cb(error, null);
     });
 };
 
 module.exports = {
     namespace: 'wolfram',
+    description: 'Interact with Wolfram Alpha',
     examples: [
         "Ask Wolfram how big the earth is"
     ],
-    register: function (config) {
-        return new Wolfram(config);
+    register: function (config, nlp, axios) {
+        return new Wolfram(config, axios);
     }
 };
